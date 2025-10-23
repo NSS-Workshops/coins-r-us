@@ -1,0 +1,12 @@
+{
+  "coins": [
+    {
+      "id": "142a",
+      "denomination": "Quarter",
+      "year": 2023,
+      "location": "Philadelphia",
+      "condition": "MS-65",
+      "price": 1
+    }
+  ]
+}

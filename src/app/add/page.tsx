@@ -60,9 +60,14 @@ export default function AddCoinPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: send to json-server
+    // POST to json-server /coins collection (assumes it is running on :3001)
+    await fetch('http://localhost:3001/coins', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 2000);
     setForm({ denomination: "", year: "", location: "", condition: "", price: "" });
@@ -134,7 +139,7 @@ export default function AddCoinPage() {
           />
         </div>
         <StyledButton type="submit">Add Coin</StyledButton>
-        {submitted && <div style={{ color: theme.colors.font, textAlign: "center", marginTop: 8 }}>Coin added!</div>}
+        {submitted && <div style={{ textAlign: "center", marginTop: 8 }}>Coin added!</div>}
       </StyledForm>
     </FormWrapper>
   );
