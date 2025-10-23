@@ -29,21 +29,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: "80px auto", padding: 24, border: "1px solid #eee", borderRadius: 8 }}>
+    <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 12 }}>
+        <div>
           <label>Email<br />
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required style={{ width: "100%", padding: 8 }} />
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required />
           </label>
         </div>
-        <div style={{ marginBottom: 12 }}>
+        <div>
           <label>Password<br />
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required style={{ width: "100%", padding: 8 }} />
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
           </label>
         </div>
-        {error && <div style={{ color: "red", marginBottom: 12 }}>{error}</div>}
-        <button type="submit" disabled={loading} style={{ width: "100%", padding: 10 }}>
+        {error && <div>{error}</div>}
+        <button type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>

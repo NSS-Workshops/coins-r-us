@@ -1,50 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import styled, { useTheme } from "styled-components";
+import { Box, Button, TextField, Flex } from "@radix-ui/themes";
 import * as Label from "@radix-ui/react-label";
-
-const FormWrapper = styled.div`
-  max-width: 420px;
-  margin: 40px auto;
-  border-radius: 16px;
-  padding: 32px 24px;
-`;
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-const StyledLabel = styled(Label.Root)`
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-`;
-const StyledInput = styled.input`
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #C0C0C0;
-  font-size: 1rem;
-  background: #fff8e1;
-  color: #333;
-  outline: none;
-  &:focus {
-    border-color: #FFD700;
-    box-shadow: 0 0 0 2px #FFD70044;
-  }
-`;
-const StyledButton = styled.button`
-  font-weight: 700;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 0;
-  margin-top: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-  &:hover {
-    background: #b0b0b0;
-  }
-`;
 
 export default function AddCoinPage() {
   const [form, setForm] = useState({
@@ -60,88 +17,35 @@ export default function AddCoinPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // POST to json-server /coins collection (assumes it is running on :3001)
-    await fetch('http://localhost:3001/coins', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 2000);
-    setForm({ denomination: "", year: "", location: "", condition: "", price: "" });
   };
 
   return (
-    <FormWrapper>
-      <h2>Add a Coin</h2>
-      <StyledForm onSubmit={handleSubmit}>
-        <div>
-          <StyledLabel htmlFor="denomination">Coin denomination</StyledLabel>
-          <StyledInput
-            id="denomination"
-            name="denomination"
-            value={form.denomination}
-            onChange={handleChange}
-            required
-            placeholder="e.g. Quarter, Dime, etc."
-          />
-        </div>
-        <div>
-          <StyledLabel htmlFor="year">Coin minting year</StyledLabel>
-          <StyledInput
-            id="year"
-            name="year"
-            type="number"
-            min="1500"
-            max={new Date().getFullYear()}
-            value={form.year}
-            onChange={handleChange}
-            required
-            placeholder="e.g. 1923"
-          />
-        </div>
-        <div>
-          <StyledLabel htmlFor="location">Coin minting location</StyledLabel>
-          <StyledInput
-            id="location"
-            name="location"
-            value={form.location}
-            onChange={handleChange}
-            required
-            placeholder="e.g. Philadelphia"
-          />
-        </div>
-        <div>
-          <StyledLabel htmlFor="condition">Coin condition</StyledLabel>
-          <StyledInput
-            id="condition"
-            name="condition"
-            value={form.condition}
-            onChange={handleChange}
-            required
-            placeholder="e.g. MS-65, Good, etc."
-          />
-        </div>
-        <div>
-          <StyledLabel htmlFor="price">Price</StyledLabel>
-          <StyledInput
-            id="price"
-            name="price"
-            type="number"
-            min="0"
-            step="0.01"
-            value={form.price}
-            onChange={handleChange}
-            required
-            placeholder="e.g. 150.00"
-          />
-        </div>
-        <StyledButton type="submit">Add Coin</StyledButton>
-        {submitted && <div style={{ textAlign: "center", marginTop: 8 }}>Coin added!</div>}
-      </StyledForm>
-    </FormWrapper>
+    <Box maxWidth="400px">
+      <form onSubmit={handleSubmit}>
+        <Flex direction="column" gap="3">
+          <Label.Root htmlFor="denomination">Denomination</Label.Root>
+          <TextField.Root id="denomination" name="denomination" value={form.denomination} onChange={handleChange} />
+
+          <Label.Root htmlFor="year">Year</Label.Root>
+          <TextField.Root id="year" name="year" value={form.year} onChange={handleChange} />
+
+          <Label.Root htmlFor="location">Location</Label.Root>
+          <TextField.Root id="location" name="location" value={form.location} onChange={handleChange} />
+
+          <Label.Root htmlFor="condition">Condition</Label.Root>
+          <TextField.Root id="condition" name="condition" value={form.condition} onChange={handleChange} />
+
+          <Label.Root htmlFor="price">Price</Label.Root>
+          <TextField.Root id="price" name="price" value={form.price} onChange={handleChange} />
+
+          <Button type="submit" variant="solid" size="3">Add Coin</Button>
+        </Flex>
+      </form>
+      {submitted && <p>Coin added. (This is a placeholder; hook up to backend as needed.)</p>}
+    </Box>
   );
 }
 
